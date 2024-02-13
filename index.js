@@ -32,8 +32,15 @@ app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
+//Routes
+
+//Allow only logged in user to create short url
 app.use('/url', restricToLoggedinUserOnly, urlRouter);
+
+//Allow only logged in user to view their own created urls
 app.use('/',checkAuth, viewRouter);
+
+//Route responsible for user login and signup and creating jwt token and storing in a cookie
 app.use('/user', userRouter);
 
 

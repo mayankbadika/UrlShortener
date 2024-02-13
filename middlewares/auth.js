@@ -1,7 +1,7 @@
 const {getUser} = require('../service/auth');
 
 async function restricToLoggedinUserOnly(req, res, next) {
-    //Getting user id from uid stored in cookie
+    //Getting user id from uid stored in cookie, this cookie is sent by browser
     const userid = req.cookies?.uid;
     if(!userid) {
         return res.redirect('/login');
