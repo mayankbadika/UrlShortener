@@ -37,6 +37,10 @@ async function handleLogin(req, res) {
     //Send token in a cookie to client
     res.cookie('uid', token);
 
+    if(user.role === "ADMIN") {
+        return res.redirect('/admin/urls');
+    }
+
     return res.redirect('/');
 }
 

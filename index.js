@@ -10,7 +10,7 @@ const urlRouter = require('./routes/url');
 const viewRouter = require('./routes/staticRouter');
 const userRouter = require('./routes/user');
 const cookieparser = require('cookie-parser');
-const {restricToLoggedinUserOnly, checkAuth} = require('./middlewares/auth');
+const {restrictToRole, checkforAuthentication} = require('./middlewares/auth');
 
 if(!mongodburl) {
     mongodburl = 'mongodb://localhost:27017/urlshortenerDB';
@@ -22,6 +22,7 @@ connecttoDB(mongodburl);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieparser());
+app.use(checkforAuthentication);
 
 //Server Side Rendering
 app.set('view engine', 'ejs');
@@ -35,10 +36,10 @@ app.listen(port, () => {
 //Routes
 
 //Allow only logged in user to create short url
-app.use('/url', restricToLoggedinUserOnly, urlRouter);
+app.use('/url',restrictToRole(["ADMIN","NORMAL"]), urlRouter);
 
 //Allow only logged in user to view their own created urls
-app.use('/',checkAuth, viewRouter);
+app.use('/', viewRouter);
 
 //Route responsible for user login and signup and creating jwt token and storing in a cookie
 app.use('/user', userRouter);
