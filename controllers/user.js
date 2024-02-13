@@ -33,6 +33,8 @@ async function handleLogin(req, res) {
     }
 
     const token = setUser(user);
+
+    //Send token in cookie to client
     res.cookie('uid', token);
     return res.redirect('/');
 }

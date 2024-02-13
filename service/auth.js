@@ -5,7 +5,10 @@ const secret = "mayank@learningstatelessauthentication";//process.env.JWT_SECRET
 //const sessionIdToUserMap = new Map();
 
 function setUser(user) {
-    return jwt.sign(JSON.stringify(user), secret);
+    return jwt.sign({
+        email: user.email, 
+        _id: user._id
+    }, secret);
 }
 
 function getUser(token) {
