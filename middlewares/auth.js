@@ -3,7 +3,11 @@ const {getUser} = require('../service/auth');
 //Authorization middleware
 function checkforAuthentication(req, res, next) {
     //Getting user id from uid stored in cookie, this cookie is sent by browser
-    const userid = req.cookies?.uid;
+    //Also if there is a jwt token in the header, we use that 
+    const headerToken = req.headers.authorization?.split(' ')[1];
+    
+    //Check for token from either coookies or header
+    const userid = req.cookies?.uid || headerToken;
     req.user = null;
     if(!userid) {
         return next();

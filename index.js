@@ -9,6 +9,8 @@ const {connecttoDB} = require('./connection');
 const urlRouter = require('./routes/url');
 const viewRouter = require('./routes/staticRouter');
 const userRouter = require('./routes/user');
+const apiRouter = require('./routes/api');
+
 const cookieparser = require('cookie-parser');
 const {restrictToRole, checkforAuthentication} = require('./middlewares/auth');
 
@@ -44,4 +46,4 @@ app.use('/', viewRouter);
 //Route responsible for user login and signup and creating jwt token and storing in a cookie
 app.use('/user', userRouter);
 
-
+app.use('/api', apiRouter);
